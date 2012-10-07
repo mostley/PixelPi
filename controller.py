@@ -14,7 +14,7 @@ class RGBController:
         self.verbose = False
         self.chip_type = 'WS2801'
 
-    def write_stream(self, pixels):
+    def write_stream(self, spidev, pixels):
         if self.chip_type == "LPD6803":
             pixel_out_bytes = bytearray(2)
             spidev.write(bytearray(b'\x00\x00'))
@@ -78,11 +78,11 @@ class RGBController:
     		for pixel_index in range(pixels_in_buffer):
     			pixel_to_adjust = bytearray(data[(pixel_index * PIXEL_SIZE):((pixel_index * PIXEL_SIZE) + PIXEL_SIZE)])
     			
-    			pixel_to_filter = correct_pixel_brightness(pixel_to_adjust)
+    			pixel_to_filter = self.correct_pixel_brightness(pixel_to_adjust)
     			
-    			pixels[((pixel_index)*PIXEL_SIZE):] = filter_pixel(pixel_to_filter[:], 1)
+    			pixels[((pixel_index)*PIXEL_SIZE):] = self.filter_pixel(pixel_to_filter[:], 1)
             		
-    		write_stream(pixels)
+    		self.write_stream(spidev, pixels)
     		spidev.flush()
 
 def defineCliArguments(controller):
