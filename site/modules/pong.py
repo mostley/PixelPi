@@ -45,7 +45,7 @@ class Pong:
             self.ballvelocity = Vector.randomUnitCircle()*self.ballSpeed
         self.startTime = time.clock()
     
-    def setScore(self, amount)
+    def setScore(self, amount):
         self.score += amount
         
         #todo: gameover detection
