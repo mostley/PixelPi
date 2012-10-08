@@ -42,8 +42,6 @@ class Pong:
             dt = (t - lastupdate)
             lastupdate = t
             
-            self.draw()
-            
             #print "update",dt,self.ball,self.ballvelocity * dt
             self.ball += self.ballvelocity * dt
             
@@ -79,6 +77,8 @@ class Pong:
                     self.ball.x *= -1
                     self.ballvelocity.x *= -1
             #print self.ball
+            
+            self.draw()
             
             t2 = time.clock()
             time.sleep(1/30.0 - (t2-t))
