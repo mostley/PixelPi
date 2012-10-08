@@ -52,14 +52,14 @@ class Pong:
             #print "update",dt,self.ball,self.ballvelocity * dt
             self.ball += self.ballvelocity * dt
             
-            if self.ball.y > self.maxY-1:
+            if self.ball.y > self.maxY:
                 print "collision top",self.ball.y
-                d = self.ball.y - (self.maxY-1)
+                d = self.ball.y - self.maxY
                 self.ball.y -= d
                 self.ballvelocity.y *= -1
-            elif self.ball.y < 1:
+            elif self.ball.y < 0:
                 print "collision bottom"
-                self.ball.y = 1-self.ball.y
+                self.ball.y = -self.ball.y
                 self.ballvelocity.y *= -1
                 
             if self.ball.x > self.maxX-1:
