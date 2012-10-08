@@ -39,7 +39,7 @@ class Pong:
             dt = (t - lastupdate)
             lastupdate = t
             
-            print "update",dt
+            print "update",dt,self.ball,self.ballvelocity * dt
             self.ball += self.ballvelocity * dt
             
             self.draw()
