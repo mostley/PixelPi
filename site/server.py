@@ -12,6 +12,8 @@ class Root(object):
 	def __init__(self):
 		self.lookup = TemplateLookup(directories=['html'])
 
+		self.currentMode = 'pong'
+
 	@cherrypy.expose
 	def index(self):
 		print cherrypy.request.method
@@ -21,7 +23,7 @@ class Root(object):
 	@cherrypy.expose
 	@cherrypy.tools.json_out(on = True)
 	def update(self):
-		success = False
+		result = { 'success': False, 'command': '' }
 		cl = cherrypy.request.headers['Content-Length']
 		rawbody = cherrypy.request.body.read(int(cl))
 
@@ -31,10 +33,24 @@ class Root(object):
 			body = simplejson.loads(rawbody)
 			print "'",body,"'"
 
-			if body["command"] == 'status':
-				success = True
+			result['command'] = body["command"]
 
-		return { 'success': success }
+			if body["command"] == 'status':
+				result['success'] = True
+				result['mode'] = self.currentMode
+			elif body["command"] == 'changemode':
+				self.currentMode = body['mode']
+				result['mode'] = self.currentMode
+			elif body["command"] == 'pong_left_up':
+				result['success'] = True
+			elif body["command"] == 'pong_left_down':
+				result['success'] = True
+			elif body["command"] == 'pong_right_up':
+				result['success'] = True
+			elif body["command"] == 'pong_right_down':
+				result['success'] = True
+
+		return result
 
 if __name__ == '__main__':
 	current_dir = os.path.dirname(os.path.abspath(__file__))

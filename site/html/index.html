@@ -12,30 +12,374 @@
 
 
         <link rel="stylesheet" href="css/normalize.css">
+        <style type="text/css">
+
+        	body {
+				font: 11pt "DejaVu Sans Condensed",Lucida,"Lucida Sans",Arial,Sans-serif;
+				color: #fff;
+				background: #1f1f1f;
+			}
+
+			h1 {
+				overflow: hidden;
+				margin-bottom: .5em;
+				padding: 20px 0;
+				font-size: 280%;
+				letter-spacing: 0;
+				color: #5db0e6;
+				border-bottom: 1px solid #2f2f2f;
+				font-family: myriad,"Myriad Pro";
+				font-style: italic;
+			}
+
+			h1 a {
+				float: right;
+				margin-top: -2em;
+				font-size: 13px;
+				color: #fff;
+				font-weight: normal;
+			}
+
+			h2 {
+				margin: 1em 0 .5em;
+				font-size: 190%;
+				color: #999;
+				font-family: myriad,"Myriad Pro";
+				font-weight: normal;
+			}
+
+			a {
+				color: #5db0e6;
+			}
+
+			ul {
+				padding-left: 1em;
+				list-style: inside disc;
+			}
+
+			ul li {
+				margin: 2px 0;
+			}
+
+			pre {
+				margin: 10px 0;
+				padding: 10px;
+				background: #000;
+			}
+
+			#container {
+				overflow: hidden;
+				margin: 0 auto 20px;
+				width: 990px;
+			}
+
+			div.box-primary {
+				display: inline;
+				float: left;
+				width: 620px;
+			}
+
+			div.box-secondary {
+				display: inline;
+				float: right;
+				padding-left: 15px;
+				width: 350px;
+			}
+
+			div.box-inner {
+				overflow: hidden;
+				padding-bottom: 15px;
+				border-bottom: 1px solid #2f2f2f;
+				zoom: 1;
+			}
+
+			#container .js {
+				overflow: hidden;
+				zoom: 1;
+			}
+
+			#container .carousel,#container .carousel .carousel-wrap {
+				margin: 0;
+				border: 0;
+				zoom: 1;
+			}
+
+			#container .js .carousel-wrap {
+				display: inline-block;
+				vertical-align: middle;
+				width: 500px;
+				margin: 0 5px 15px;
+				border: 1px solid #4f4f4f;
+				background: #1a1a1a;
+			}
+
+			.IE #container .js .carousel-wrap {
+				display: inline;
+			}
+
+			#container .carousel ul {
+				margin: 0;
+				padding: 0;
+				zoom: 1;
+			}
+
+			#container .js ul li {
+				overflow: hidden;
+				display: inline;
+				float: left;
+				width: 500px;
+				height: 355px;
+				text-align: center;
+				zoom: 1;
+			}
+
+			#container .carousel .carousel-control {
+				overflow: hidden;
+				display: inline-block;
+				vertical-align: middle;
+				width: 40px;
+				height: 40px;
+				cursor: pointer;
+				line-height: 999px;
+				zoom: 1;
+				border: 0;
+				text-indent: -9999px;
+			}
+
+			#container .carousel .carousel-next {
+				background: url(img/next.png) 0 0 no-repeat;
+			}
+
+			#container .carousel .carousel-previous {
+				background: url(img/prev.png) 0 0 no-repeat;
+			}
+
+			#container .carousel .carousel-control:hover {
+				-moz-opacity: .7;
+				-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+				filter: alpha(opacity=70);
+				opacity: 0.70;
+			}
+
+			#container .carousel .disabled,#container .carousel .disabled:hover {
+				-moz-opacity: .1;
+				-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=10)";
+				filter: alpha(opacity=10);
+				opacity: 0.10;
+				cursor: default;
+			}
+
+			#container .carousel div {
+				margin: 0;
+				padding: 0;
+				border: 0;
+			}
+
+			#container .carousel ul {
+				padding: 0;
+				list-style: none;
+			}
+
+			#container .carousel ul li {
+				position: relative;
+				width: 500px;
+				margin: 0;
+			}
+
+			#container .carousel ul li cite {
+				position: absolute;
+				bottom: 3px;
+				right: 10px;
+				line-height: 19px;
+				font-size: 11px;
+			}
+
+			#container .carousel ul li cite a img {
+				vertical-align: middle;
+			}
+
+			#container .carousel ul li cite a {
+				color: #fff;
+				text-decoration: none;
+			}
+
+			#container div.center-wrap {
+				overflow: hidden;
+				clear: both;
+				zoom: 1;
+			}
+
+			#container div.center-wrap div {
+				border: 0;
+				margin: 15px 0;
+			}
+
+			#container div.center-wrap a {
+				margin: 0 2px;
+				padding: 2px 5px;
+				border: 1px solid #4f4f4f;
+				background: #333;
+				cursor: pointer;
+				color: #fff;
+				border-radius: 12px;
+			}
+
+			#container div.center-wrap a.active {
+				font-weight: bold;
+				color: #5db0e6;
+			}
+
+			#pongcontainer span.left {
+				float:left;
+				margin-left: 50px;
+			}
+
+			#pongcontainer span.right {
+				float:right;
+				margin-right: 50px;
+			}
+
+			#pongcontainer input.tapbutton {
+				width: 80px;
+				height: 80px;
+			}
+
+			input.activationBtn {
+				width: 80px;
+				height: 30px;
+			}
+			#container .carousel div.activationBtnContainer {
+				text-align: left;
+				margin: 10px;
+			}
+
+			div.clear { clear: both; }
+
+        </style>
 	</head>
 	<body>
 		<input id="testbutton" type="submit" value="Status" data-command="status"/>
 		<div id="statusOutput"> - </div>
 
+		<div id="container">
+			<h1>Couchtable Modes</h1>
+
+			<div class="box box-inner">
+				<div class="box box-primary">
+					<div class="carousel modeCarousel">
+					    <ul>
+					        <li id="pongcontainer">
+					        	<h2>Pong</h2>
+					        	
+					        	<span class="left">
+					        		<h3>Left</h3>
+
+					        		<input id="left_pong_button_up" class="tapbutton" type="button" value="Up"/><br/>
+					        		<input id="left_pong_button_down" class="tapbutton" type="button" value="Down"/>
+					        	</span>
+
+					        	<span class="right">
+					        		<h3>Right</h3>
+
+					        		<input id="right_pong_button_up" class="tapbutton" type="button" value="Up"/><br/>
+					        		<input id="right_pong_button_down" class="tapbutton" type="button" value="Down"/>
+					        	</span>
+
+					        	<div class="clear"></div>
+
+					        	<br/>
+
+					        	<div class="activationBtnContainer"><input class="activationBtn" name="pong" type="button" value="Activate"/></div>
+					        </li>
+					        
+					        <li>
+					        	<h2>test</h2>
+
+					        	<br/>
+
+					        	<div class="activationBtnContainer"><input class="activationBtn" name="test" type="button" value="Activate"/></div>
+					        </li>
+					        
+					        <li>
+					        	<h2>test2</h2>
+
+					        	<br/>
+
+					        	<div class="activationBtnContainer"><input class="activationBtn" name="test2" type="button" value="Activate"/></div>
+					        </li>
+					    </ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+        <script src="js/jquery.carousel.min.js"></script>
+        <script src="js/jquery.easing.js"></script>
 
         <script>
 
-        	$(function() {
-		        $('#testbutton').click(function(){
-		        	var data = { command: 'status' };//$(this).attr('data-command')
+        	function sendMessage(data, callback)
+        	{
+				$.ajax({
+					type: 'POST',
+					url: "update",
+					contentType: "application/json",
+					processData: false,
+					data: JSON.stringify(data),
+					success: callback || function(data) {
+						$('#statusOutput').html(data);
+					},
+					dataType: "text"
+				});
+        	}
 
-					$.ajax({
-						type: 'POST',
-						url: "update",
-						contentType: "application/json",
-						processData: false,
-						data: JSON.stringify(data),
-						success: function(data) {
-							$('#statusOutput').html(data);
-						},
-						dataType: "text"
-					});
+    		function changeStatus(data) {
+				var mode = $(this).attr('name');
+				
+				console.log("changing mode to: ",mode);
+				sendMessage({ command: 'changemode', mode: mode }, onStatus);
+			}
+    		function onStatus(data) {
+    			var obj = JSON.parse(data);
+
+    			$('input.activationBtn')
+        			.removeClass("disabled")
+        			.removeAttr("disabled")
+        			.bind("click", changeStatus);
+    			$('input.activationBtn[name=' + obj.mode + ']').unbind("click").addClass("disabled").attr("disabled","disabled");
+
+				console.log("current mode is: ", obj.mode);
+    		}
+
+    		function requestStatus() {
+        		sendMessage({ command: 'status' }, onStatus);
+        	}
+
+        	$(function() {
+
+        		requestStatus();
+
+        		$("div.modeCarousel").carousel().attr("tabindex",null);
+
+		        $('#right_pong_button_up').click(function(){
+					sendMessage({ command: 'pong_right_up' });
+				});
+
+		        $('#right_pong_button_down').click(function(){
+					sendMessage({ command: 'pong_right_down' });
+				});
+
+		        $('#left_pong_button_up').click(function(){
+					sendMessage({ command: 'pong_left_up' });
+				});
+
+		        $('#left_pong_button_down').click(function(){
+					sendMessage({ command: 'pong_left_down' });
+				});
+
+		        $('#testbutton').click(function(){
+					sendMessage({ command: 'status' });
 				});
 			});
 			
