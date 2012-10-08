@@ -34,4 +34,4 @@ nosetests.xml
 .project
 .pydevproject
 
-site/logs/*
+site/logs/*.log
