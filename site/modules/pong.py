@@ -37,6 +37,7 @@ class Pong:
         if not self.remote:
             self.init()
         
+        print "pong - executing command:" + data['command']
         if data['command'] == 'pong_left_up':
             self.leftPaddle.y += 1
         elif data['command'] == 'pong_left_down':
