@@ -47,8 +47,12 @@ class Pong:
     
     def setScore(self, amount):
         self.score += amount
-        
-        #todo: gameover detection
+        if self.score > 6:
+            self.score = 6
+            #todo gameovert
+        elif self.score < -6:
+            self.score = -6
+            #todo gameover
 
     def update(self):
         lastupdate = time.clock()
@@ -107,11 +111,9 @@ class Pong:
         
         if self.score > 0:
             for i in range(self.score):
-                if i > 5: break;
                 self.remote.setPixel(self.grid, Vector(6+i,7), RED)
         else:
             for i in range(-self.score):
-                if i > 5: break;
                 self.remote.setPixel(self.grid, Vector(6-i,7), RED)
                 
         self.remote.setPixel(self.grid, self.ball, WHITE)
