@@ -13,7 +13,7 @@ class Pong:
         self.rightPaddle = Vector(11,4)
         self.ball = Vector(6,4)
         self.ballSpeed = 10
-        self.ballvelocity = Vector(1,1)*self.ballSpeed
+        self.ballvelocity = Vector.randomUnitCircle()*self.ballSpeed
         self.thread = None
         self.running = False
         
@@ -38,7 +38,7 @@ class Pong:
     def reset(self):
         self.ball = Vector(6,4)
         self.ballSpeed = 10
-        self.ballvelocity = Vector.randomUnit*self.ballSpeed
+        self.ballvelocity = Vector.randomUnitCircle()*self.ballSpeed
         self.startTime = time.clock()
 
     def update(self):
