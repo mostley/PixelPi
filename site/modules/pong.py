@@ -36,6 +36,16 @@ class Pong:
         dt = (time - self.lastupdate)
         self.lastupdate = time
         self.ball += self.ballvelocity * dt
+    
+    
+    def draw(self):
+        self.remote.clearPixels(self.grid, BLACK)
+        
+        self.remote.setPixel(self.grid, self.leftPaddle, BLUE)
+        self.remote.setPixel(self.grid, self.rightPaddle, BLUE)
+        self.remote.setPixel(self.grid, self.ball, WHITE)
+        
+        self.remote.sendGrid(self.grid)
 
 
     def execute(self, data):
@@ -54,14 +64,9 @@ class Pong:
         elif data['command'] == 'pong_right_down':
             self.rightPaddle.y -= 1
         
-        self.remote.clearPixels(self.grid, BLACK)
+        self.draw()
         
-        #self.remote.setPixel(self.grid, Vector(4,7), RED)
-        self.remote.setPixel(self.grid, self.leftPaddle, BLUE)
-        self.remote.setPixel(self.grid, self.rightPaddle, BLUE)
-        self.remote.setPixel(self.grid, self.ball, WHITE)
-        
-        self.remote.sendGrid(self.grid)
+        result = True
         
         return result
 
