@@ -17,6 +17,8 @@ class Pong:
         self.running = False
         self.reset()
         
+        self.score = 0
+        
         self.maxY = PIXEL_DIM_Y - 1
         self.maxX = PIXEL_DIM_X - 1
 
@@ -67,9 +69,11 @@ class Pong:
             if self.ball.x > self.maxX-1:
                 print "point for left"
                 self.reset()
+                self.score -= 1
             elif self.ball.x < 1:
-                print "collision right"
+                print "point for right"
                 self.reset()
+                self.score += 1
                 
             if self.ball.x > self.maxX-2:
                 if int(self.ball.y) == int(self.rightPaddle.y):
