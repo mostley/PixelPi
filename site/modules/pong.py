@@ -71,8 +71,10 @@ class Pong:
             if self.leftPaddle.y < 0: self.leftPaddle.y = 0
         elif data['command'] == 'pong_right_up':
             self.rightPaddle.y += 1
+            if self.rightPaddle.y > PIXEL_DIM_X - 1: self.rightPaddle.y = PIXEL_DIM_X - 1
         elif data['command'] == 'pong_right_down':
             self.rightPaddle.y -= 1
+            if self.rightPaddle.y < 0: self.rightPaddle.y = 0
         
         self.draw()
         
