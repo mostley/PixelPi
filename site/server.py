@@ -7,6 +7,22 @@ import cherrypy, simplejson, importlib
 from mako.template import Template
 from mako.lookup import TemplateLookup
 
+from cherrypy.process import plugins
+
+class ThreadStopFeature(plugins.SimplePlugin):
+    """A feature that does something."""
+    
+    def __init__(self, engine, root):
+        plugins.SimplePlugin.__init__(self, engine)
+        
+        self.root = root
+
+    def start(self):
+        pass
+
+    def stop(self):
+        self.root.shutdown()
+
 class Root(object):
 
     def __init__(self):
@@ -124,6 +140,9 @@ if __name__ == '__main__':
     }
     
     root = Root()
+    threadstop = ThreadStopFeature(cherrypy.engine, root)
+    threadstop.subscribe()
+    
     cherrypy.quickstart(root, '/', config=conf)
     
     root.shutdown()
