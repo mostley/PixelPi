@@ -1,6 +1,11 @@
 import socket, math
 from vector import *
 
+PIXEL_SIZE = 3
+PIXEL_DIM_X = 12
+PIXEL_DIM_Y = 8
+BUFFER_SIZE = PIXEL_DIM_X * PIXEL_DIM_Y * PIXEL_SIZE
+
 class Remote:
 
     def __init__(self):
