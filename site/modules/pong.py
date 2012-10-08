@@ -42,6 +42,8 @@ class Pong:
             #print "update",dt,self.ball,self.ballvelocity * dt
             self.ball += self.ballvelocity * dt
             
+            if self.ball.y > PIXEL_DIM_Y
+            
             self.draw()
             
             time.sleep(1/24.0)
@@ -65,13 +67,13 @@ class Pong:
         print "pong - executing command:" + data['command']
         if data['command'] == 'pong_left_up':
             self.leftPaddle.y += 1
-            if self.leftPaddle.y > PIXEL_DIM_X - 1: self.leftPaddle.y = PIXEL_DIM_X - 1
+            if self.leftPaddle.y > PIXEL_DIM_Y - 1: self.leftPaddle.y = PIXEL_DIM_Y - 1
         elif data['command'] == 'pong_left_down':
             self.leftPaddle.y -= 1
             if self.leftPaddle.y < 0: self.leftPaddle.y = 0
         elif data['command'] == 'pong_right_up':
             self.rightPaddle.y += 1
-            if self.rightPaddle.y > PIXEL_DIM_X - 1: self.rightPaddle.y = PIXEL_DIM_X - 1
+            if self.rightPaddle.y > PIXEL_DIM_Y - 1: self.rightPaddle.y = PIXEL_DIM_Y - 1
         elif data['command'] == 'pong_right_down':
             self.rightPaddle.y -= 1
             if self.rightPaddle.y < 0: self.rightPaddle.y = 0
