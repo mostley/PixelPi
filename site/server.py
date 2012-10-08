@@ -56,6 +56,8 @@ class Root(object):
 
             if self.modules.has_key(mode) and self.modules[mode]:
                 print self.modules[mode]
+                if self.currentModule:
+                    self.currentModule.deinit()
                 self.currentModule = self.modules[mode].getModule()
 
                 self.currentModule.init()
