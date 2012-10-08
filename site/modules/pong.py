@@ -24,6 +24,7 @@ class Pong:
         self.remote = Remote()
         self.grid = self.remote.createGridBuffer(BLACK)
         self.remote.sendGrid(self.grid)
+        self.startTime = time.clock()
 
         try:
             self.thread = Thread(target=self.update, args=())
@@ -33,6 +34,12 @@ class Pong:
 
     def deinit(self):
         self.running = False
+    
+    def reset(self):
+        self.ball = Vector(6,4)
+        self.ballSpeed = 10
+        self.ballvelocity = Vector(1,1)*self.ballSpeed
+        self.startTime = time.clock()
 
     def update(self):
         lastupdate = time.clock()
