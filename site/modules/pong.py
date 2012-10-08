@@ -75,7 +75,7 @@ class Pong:
                 print "point for left"
                 self.reset()
                 self.setScore(-1)
-            elif self.ball.x < 1:
+            elif self.ball.x < 0:
                 print "point for right"
                 self.reset()
                 self.setScore(1)
