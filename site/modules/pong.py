@@ -30,7 +30,6 @@ class Pong:
 
     def deinit(self):
         self.running = False
-        self.thread.stop()
 
     def update(self):
         lastupdate = time.clock()
