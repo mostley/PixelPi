@@ -71,7 +71,7 @@ class Pong:
                 self.ball.y = -self.ball.y
                 self.ballvelocity.y *= -1
                 
-            if self.ball.x > self.maxX-1:
+            if self.ball.x > self.maxX:
                 print "point for left"
                 self.reset()
                 self.setScore(-1)
