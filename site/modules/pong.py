@@ -72,7 +72,7 @@ class Pong:
                 if int(self.ball.y) == int(self.leftPaddle.y):
                     self.ball.x *= -1
                     self.ballvelocity.x *= -1
-            
+            print self.ball
             self.draw()
             
             time.sleep(1/24.0)
