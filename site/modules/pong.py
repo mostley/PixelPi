@@ -39,7 +39,7 @@ class Pong:
         self.ball = Vector(6,4)
         self.ballSpeed = 10
         self.ballvelocity = Vector.randomUnitCircle()*self.ballSpeed
-        while self.ballvelocity.x == 0:
+        while math.abs(self.ballvelocity.x) < 0.1:
             self.ballvelocity = Vector.randomUnitCircle()*self.ballSpeed
         self.startTime = time.clock()
 
