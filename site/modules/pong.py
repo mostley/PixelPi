@@ -58,7 +58,6 @@ class Pong:
         
         self.remote.sendGrid(self.grid)
 
-
     def execute(self, data):
         result = False
         
