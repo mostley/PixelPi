@@ -12,7 +12,7 @@ class Pong:
         self.leftPaddle = Vector(0,4)
         self.rightPaddle = Vector(11,4)
         self.ball = Vector(6,4)
-        self.ballSpeed = 5
+        self.ballSpeed = 10
         self.ballvelocity = Vector(1,1)*self.ballSpeed
         self.thread = None
         self.running = False
