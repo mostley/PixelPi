@@ -35,6 +35,8 @@ class Pong:
         time = time.clock()
         dt = (time - self.lastupdate)
         self.lastupdate = time
+        
+        print "update",dt
         self.ball += self.ballvelocity * dt
         
         self.draw()
