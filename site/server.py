@@ -58,6 +58,8 @@ if __name__ == '__main__':
 	# Set up site-wide config first so we get a log if errors occur.
 	cherrypy.config.update({
 		#'environment': 'production',
+		'server.socket_host': '192.168.1.5',
+		#'server.socket_port': 80,
 		'log.error_file': 'logs/site.log',
 		'log.screen': True
 	})
