@@ -54,6 +54,7 @@ class Pong:
                 self.ballvelocity.y *= -1
                 
             if self.ball.x > self.maxX:
+                print "collision righ"
                 d = self.maxX - self.ball.x
                 self.ball.x -= d*2
                 self.ballvelocity.x *= -1
