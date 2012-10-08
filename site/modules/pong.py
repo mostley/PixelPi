@@ -1,4 +1,4 @@
-import time
+import time, math
 from threading import Thread
 from ledlib.colors import *
 from ledlib.remote import *
