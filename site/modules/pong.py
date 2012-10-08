@@ -32,9 +32,9 @@ class Pong:
         self.thread.stop()
 
     def update(self):
-        time = time.clock()
-        dt = (time - self.lastupdate)
-        self.lastupdate = time
+        t = time.clock()
+        dt = (t - self.lastupdate)
+        self.lastupdate = t
         
         print "update",dt
         self.ball += self.ballvelocity * dt
