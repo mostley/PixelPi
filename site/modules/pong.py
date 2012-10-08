@@ -104,9 +104,6 @@ class Pong:
     def draw(self):
         self.remote.clearPixels(self.grid, BLACK)
         
-        self.remote.setPixel(self.grid, self.leftPaddle, BLUE)
-        self.remote.setPixel(self.grid, self.rightPaddle, BLUE)
-        self.remote.setPixel(self.grid, self.ball, WHITE)
         
         if self.score > 0:
             for i in range(self.score):
@@ -116,6 +113,10 @@ class Pong:
             for i in range(-self.score):
                 if i > 5: break;
                 self.remote.setPixel(self.grid, Vector(6-i,7), RED)
+                
+        self.remote.setPixel(self.grid, self.ball, WHITE)
+        self.remote.setPixel(self.grid, self.leftPaddle, BLUE)
+        self.remote.setPixel(self.grid, self.rightPaddle, BLUE)
         
         self.remote.sendGrid(self.grid)
 
