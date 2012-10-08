@@ -19,7 +19,7 @@ class Pong:
         self.remote.sendGrid(self.grid)
 
         try:
-            self.thread = Thread(target=self.update, args=self)
+            self.thread = Thread(target=self.update, args=())
             self.thread.start()
         except Exception, errtxt:
             print errtxt
