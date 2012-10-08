@@ -81,12 +81,12 @@ class Pong:
                 self.setScore(1)
                 
             if self.ball.x > self.maxX-2:
-                if int(self.ball.y) == int(self.rightPaddle.y):
+                if int(self.ball.y) == int(self.rightPaddle.y) or int(self.ball.y) == int(self.rightPaddle.y-1) or int(self.ball.y) == int(self.rightPaddle.y+1):
                     d = self.ball.x - (self.maxX-1)
                     self.ball.x -= d*2
                     self.ballvelocity.x *= -1
             elif self.ball.x < 2:
-                if int(self.ball.y) == int(self.leftPaddle.y):
+                if int(self.ball.y) == int(self.leftPaddle.y) or int(self.ball.y) == int(self.leftPaddle.y-1) or int(self.ball.y) == int(self.leftPaddle.y+1):
                     self.ball.x *= -1
                     self.ballvelocity.x *= -1
             #print self.ball
