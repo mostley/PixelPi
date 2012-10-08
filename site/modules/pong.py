@@ -46,7 +46,7 @@ class Pong:
             self.ball += self.ballvelocity * dt
             
             if self.ball.y > self.maxY:
-                print "collision top"
+                print "collision top",self.ball.y
                 d = self.ball.y - self.maxY
                 self.ball.y -= d*2
                 self.ballvelocity.y *= -1
