@@ -23,17 +23,17 @@ class Pong:
             self.init()
         
         if data['command'] == 'pong_left_up':
-            pass
+            self.leftPaddle.y += 1
         elif data['command'] == 'pong_left_down':
-            pass
+            self.leftPaddle.y -= 1
         elif data['command'] == 'pong_right_up':
-            pass
+            self.rightPaddle.y += 1
         elif data['command'] == 'pong_right_down':
-            pass
+            self.rightPaddle.y -= 1
         
         self.remote.clearPixels(self.grid, BLACK)
         
-        self.remote.setPixel(self.grid, Vector(4,7), RED)
+        #self.remote.setPixel(self.grid, Vector(4,7), RED)
         self.remote.setPixel(self.grid, self.leftPaddle, BLUE)
         self.remote.setPixel(self.grid, self.rightPaddle, BLUE)
         self.remote.setPixel(self.grid, self.ball, WHITE)
