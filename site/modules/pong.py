@@ -28,6 +28,7 @@ class Pong:
             print errtxt
 
     def deinit(self):
+        self.running = False
         self.thread.stop()
 
     def update(self):
