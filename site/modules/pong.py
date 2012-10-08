@@ -13,9 +13,9 @@ class Pong:
         self.rightPaddle = Vector(11,4)
         self.ball = Vector(6,4)
         self.ballSpeed = 10
-        self.ballvelocity = Vector.randomUnitCircle()*self.ballSpeed
         self.thread = None
         self.running = False
+        self.reset()
         
         self.maxY = PIXEL_DIM_Y - 1
         self.maxX = PIXEL_DIM_X - 1
