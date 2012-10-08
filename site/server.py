@@ -61,7 +61,7 @@ class Root(object):
                 result['mode'] = self.currentMode
             
             elif body["command"] == 'changemode':
-                self.loadModule(body['mode'])
+                self.setMode(body['mode'])
                 result['mode'] = body['mode']
 
             elif body["command"] in self.validCommands:
