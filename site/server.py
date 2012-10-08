@@ -3,7 +3,7 @@
 
 import os.path
 
-import cherrypy, simplejson
+import cherrypy, simplejson, importlib
 from mako.template import Template
 from mako.lookup import TemplateLookup
 
@@ -13,6 +13,7 @@ class Root(object):
         self.lookup = TemplateLookup(directories=['html'])
 
         self.currentMode = 'pong'
+        self.currentModule = None
         self.modules = {}
 
         self.validCommands = []
@@ -24,16 +25,21 @@ class Root(object):
         return tmpl.render(salutation="Hello", target="World")
 
     def setMode(self, mode):
-        self.currentMode = mode
+        if mode and len(mode) > 0:
+            print "setmode",mode
+            self.currentMode = mode
 
-        if not self.modules.has_key(mode):
-            self.modules[mode] = __import__(mode)
+            if not self.modules.has_key(mode):
+                moduleName = 'modules.' + mode
+                print 'importing ', moduleName
+                self.modules[mode] = importlib.import_module(moduleName)
 
-        if self.modules.has_key(mode) and self.modules[mode]:
-            self.currentModule = self.modules[mode]
+            if self.modules.has_key(mode) and self.modules[mode]:
+                print self.modules[mode]
+                self.currentModule = self.modules[mode].getModule()
 
-            self.currentModule.init()
-            self.validCommands = self.currentModule.commands
+                self.currentModule.init()
+                self.validCommands = self.currentModule.commands
 
     def executeCommand(self, data):
         result = False
@@ -61,11 +67,15 @@ class Root(object):
                 result['mode'] = self.currentMode
             
             elif body["command"] == 'changemode':
-                self.setMode(body['mode'])
+                self.setMode(self.currentMode)
                 result['mode'] = body['mode']
 
-            elif body["command"] in self.validCommands:
-                result['success'] = self.executeCommand(data)
+            elif not self.currentModule:
+                self.setMode(self.currentMode)
+                result['mode'] = self.currentMode 
+
+            if body["command"] in self.validCommands:
+                result['success'] = self.executeCommand(body)
 
         return result
 
