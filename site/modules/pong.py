@@ -14,7 +14,7 @@ class Pong:
         self.ball = Vector(6,4)
         self.ballvelocity = Vector(1,1)
         self.thread = None
-        self.lastupdate = time.clock()
+        self.running = False
 
     def init(self):
         self.remote = Remote()
@@ -23,7 +23,6 @@ class Pong:
 
         try:
             self.thread = Thread(target=self.update, args=())
-            self.lastupdate = time.clock()
             self.thread.start()
         except Exception, errtxt:
             print errtxt
@@ -32,14 +31,19 @@ class Pong:
         self.thread.stop()
 
     def update(self):
-        t = time.clock()
-        dt = (t - self.lastupdate)
-        self.lastupdate = t
-        
-        print "update",dt
-        self.ball += self.ballvelocity * dt
-        
-        self.draw()
+        lastupdate = time.clock()
+        self.running = True
+        while self.running:
+            t = time.clock()
+            dt = (t - lastupdate)
+            lastupdate = t
+            
+            print "update",dt
+            self.ball += self.ballvelocity * dt
+            
+            self.draw()
+            
+            time.sleep(24/1 - dt)
     
     
     def draw(self):
