@@ -44,6 +44,11 @@ class Pong:
         while math.abs(self.ballvelocity.x) < 0.1:
             self.ballvelocity = Vector.randomUnitCircle()*self.ballSpeed
         self.startTime = time.clock()
+    
+    def setScore(self, amount)
+        self.score += amount
+        
+        #todo: gameover detection
 
     def update(self):
         lastupdate = time.clock()
