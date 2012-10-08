@@ -44,8 +44,7 @@ class Pong:
             
             self.draw()
             
-            time.sleep(1/24 - dt)
-    
+            time.sleep(1/24.0 - dt)
     
     def draw(self):
         self.remote.clearPixels(self.grid, BLACK)
