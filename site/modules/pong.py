@@ -50,7 +50,7 @@ class Pong:
                 self.ball.y -= d*2
                 self.ballvelocity.y *= -1
             elif self.ball.y < 0:
-                self.ball.y *= -1
+                self.ball.y = -self.ball.y
                 self.ballvelocity.y *= -1
                 
             if self.ball.x > self.maxX:
@@ -73,6 +73,7 @@ class Pong:
                     self.ball.x *= -1
                     self.ballvelocity.x *= -1
             #print self.ball
+            
             self.draw()
             
             time.sleep(1/24.0)
