@@ -71,15 +71,6 @@ class Pong:
                 self.ball.y = -self.ball.y
                 self.ballvelocity.y *= -1
                 
-            if self.ball.x > self.maxX:
-                print "point for left"
-                self.reset()
-                self.setScore(-1)
-            elif self.ball.x < 0:
-                print "point for right"
-                self.reset()
-                self.setScore(1)
-                
             if self.ball.x > self.maxX-1:
                 if int(self.ball.y) == int(self.rightPaddle.y) or int(self.ball.y) == int(self.rightPaddle.y-1) or int(self.ball.y) == int(self.rightPaddle.y+1):
                     d = self.ball.x - (self.maxX-1)
@@ -89,6 +80,15 @@ class Pong:
                 if int(self.ball.y) == int(self.leftPaddle.y) or int(self.ball.y) == int(self.leftPaddle.y-1) or int(self.ball.y) == int(self.leftPaddle.y+1):
                     self.ball.x = -self.ball.x
                     self.ballvelocity.x *= -1
+                
+            if self.ball.x > self.maxX:
+                print "point for left"
+                self.reset()
+                self.setScore(-1)
+            elif self.ball.x < 0:
+                print "point for right"
+                self.reset()
+                self.setScore(1)
             #print self.ball
             
             self.ballspeed = 10 + (t - self.startTime)
