@@ -81,6 +81,7 @@ class Pong:
                     self.ball.x *= -1
                     self.ballvelocity.x *= -1
             #print self.ball
+            self.ballvelocity
             
             self.draw()
             
