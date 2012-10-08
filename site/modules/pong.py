@@ -14,6 +14,7 @@ class Pong:
         self.ball = Vector(6,4)
         self.ballvelocity = Vector(1,1)
         self.thread = None
+        self.lastupdate = time.clock()
 
     def init(self):
         self.remote = Remote()
