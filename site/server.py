@@ -17,6 +17,10 @@ class Root(object):
         self.modules = {}
 
         self.validCommands = []
+    
+    def shutdown(self):
+        if self.currentModule:
+            self.currentModule.deinit()
 
     @cherrypy.expose
     def index(self):
@@ -118,4 +122,10 @@ if __name__ == '__main__':
             }
         }
     }
-    cherrypy.quickstart(Root(), '/', config=conf)
+    
+    root = Root()
+    cherrypy.quickstart(root, '/', config=conf)
+    
+    root.shutdown()
+    
+    
