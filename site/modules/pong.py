@@ -65,7 +65,7 @@ class Pong:
                 
             if self.ball.x > self.maxX-1:
                 if int(self.ball.y) == int(self.rightPaddle.y):
-                    d = (self.maxX-1) - self.ball.x
+                    d = self.ball.x - (self.maxX-1)
                     self.ball.x -= d*2
                     self.ballvelocity.x *= -1
             elif self.ball.x < 0:
