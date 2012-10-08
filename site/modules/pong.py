@@ -43,7 +43,7 @@ class Pong:
             
             self.draw()
             
-            time.sleep(24/1 - dt)
+            time.sleep(1/24 - dt)
     
     
     def draw(self):
