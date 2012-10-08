@@ -42,7 +42,8 @@ class Pong:
             #print "update",dt,self.ball,self.ballvelocity * dt
             self.ball += self.ballvelocity * dt
             
-            if self.ball.y > PIXEL_DIM_Y
+            if self.ball.y > PIXEL_DIM_Y:
+                pass
             
             self.draw()
             
