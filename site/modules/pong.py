@@ -1,7 +1,7 @@
 import time
 from threading import Thread
 from ledlib.colors import *
-from ledlib.remote import Remote
+from ledlib.remote import *
 from ledlib.vector import *
 
 class Pong:
@@ -65,8 +65,10 @@ class Pong:
         print "pong - executing command:" + data['command']
         if data['command'] == 'pong_left_up':
             self.leftPaddle.y += 1
+            if self.leftPaddle.y < 0: self.leftPaddle.y = led
         elif data['command'] == 'pong_left_down':
             self.leftPaddle.y -= 1
+            if self.leftPaddle.y < 0: self.leftPaddle.y = 0
         elif data['command'] == 'pong_right_up':
             self.rightPaddle.y += 1
         elif data['command'] == 'pong_right_down':
