@@ -78,6 +78,7 @@ class Pong:
                     self.ballvelocity.x *= -1
             elif self.ball.x < 1:
                 if int(self.ball.y) == int(self.leftPaddle.y):
+                    print "paddled!!!"
                     self.ball.x = 1-self.ball.x
                     self.ballvelocity.x *= -1
                 
