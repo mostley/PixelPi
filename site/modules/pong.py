@@ -1,3 +1,4 @@
+from threading import Thread
 from ledlib.colors import *
 from ledlib.remote import Remote
 from ledlib.vector import *
@@ -10,11 +11,25 @@ class Pong:
         self.leftPaddle = Vector(0,4)
         self.rightPaddle = Vector(11,4)
         self.ball = Vector(6,4)
+        self.thread = None
 
     def init(self):
         self.remote = Remote()
         self.grid = self.remote.createGridBuffer(BLACK)
         self.remote.sendGrid(self.grid)
+
+        try:
+            self.thread = Thread(target=self.update, args=self)
+            self.thread.start()
+        except Exception, errtxt:
+            print errtxt
+
+    def deinit(self):
+        self.thread.stop()
+
+    def update(self):
+        pass
+
 
     def execute(self, data):
         result = False
