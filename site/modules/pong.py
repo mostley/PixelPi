@@ -16,6 +16,9 @@ class Pong:
         self.ballvelocity = Vector(1,1)*self.ballSpeed
         self.thread = None
         self.running = False
+        
+        self.maxY = PIXEL_DIM_Y - 1
+        self.maxX = PIXEL_DIM_X - 1
 
     def init(self):
         self.remote = Remote()
@@ -42,8 +45,11 @@ class Pong:
             #print "update",dt,self.ball,self.ballvelocity * dt
             self.ball += self.ballvelocity * dt
             
-            if self.ball.y > PIXEL_DIM_Y:
-                pass
+            if self.ball.y > self.maxY:
+                d = self.maxY - self.ball.y
+                self.ball.y -= d*2
+            elif self.ball.y < 0:
+                self.ball.y *= -1
             
             self.draw()
             
@@ -67,13 +73,13 @@ class Pong:
         print "pong - executing command:" + data['command']
         if data['command'] == 'pong_left_up':
             self.leftPaddle.y += 1
-            if self.leftPaddle.y > PIXEL_DIM_Y - 1: self.leftPaddle.y = PIXEL_DIM_Y - 1
+            if self.leftPaddle.y > self.maxY: self.leftPaddle.y = self.maxY
         elif data['command'] == 'pong_left_down':
             self.leftPaddle.y -= 1
             if self.leftPaddle.y < 0: self.leftPaddle.y = 0
         elif data['command'] == 'pong_right_up':
             self.rightPaddle.y += 1
-            if self.rightPaddle.y > PIXEL_DIM_Y - 1: self.rightPaddle.y = PIXEL_DIM_Y - 1
+            if self.rightPaddle.y > self.maxY: self.rightPaddle.y = self.maxY
         elif data['command'] == 'pong_right_down':
             self.rightPaddle.y -= 1
             if self.rightPaddle.y < 0: self.rightPaddle.y = 0
