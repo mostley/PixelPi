@@ -58,14 +58,11 @@ class Pong:
                 self.ballvelocity.y *= -1
                 
             if self.ball.x > self.maxX:
-                print "collision right"
-                d = self.ball.x - self.maxX
-                self.ball.x -= d*2
-                self.ballvelocity.x *= -1
+                print "point for left"
+                self.reset()
             elif self.ball.x < 0:
-                print "collision left"
-                self.ball.x *= -1
-                self.ballvelocity.x *= -1
+                print "collision right"
+                self.reset()
                 
             if self.ball.x > self.maxX-1:
                 if int(self.ball.y) == int(self.rightPaddle.y):
