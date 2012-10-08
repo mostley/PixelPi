@@ -52,29 +52,29 @@ class Pong:
             #print "update",dt,self.ball,self.ballvelocity * dt
             self.ball += self.ballvelocity * dt
             
-            if self.ball.y > self.maxY:
+            if self.ball.y > self.maxY-1:
                 print "collision top",self.ball.y
-                d = self.ball.y - self.maxY
+                d = self.ball.y - (self.maxY-1)
                 self.ball.y -= d
                 self.ballvelocity.y *= -1
-            elif self.ball.y < 0:
+            elif self.ball.y < 1:
                 print "collision bottom"
-                self.ball.y = -self.ball.y
+                self.ball.y = 1-self.ball.y
                 self.ballvelocity.y *= -1
                 
-            if self.ball.x > self.maxX:
+            if self.ball.x > self.maxX-1:
                 print "point for left"
                 self.reset()
-            elif self.ball.x < 0:
+            elif self.ball.x < 1:
                 print "collision right"
                 self.reset()
                 
-            if self.ball.x > self.maxX-1:
+            if self.ball.x > self.maxX-2:
                 if int(self.ball.y) == int(self.rightPaddle.y):
                     d = self.ball.x - (self.maxX-1)
                     self.ball.x -= d*2
                     self.ballvelocity.x *= -1
-            elif self.ball.x < 0:
+            elif self.ball.x < 2:
                 if int(self.ball.y) == int(self.leftPaddle.y):
                     self.ball.x *= -1
                     self.ballvelocity.x *= -1
