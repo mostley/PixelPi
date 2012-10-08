@@ -29,7 +29,7 @@ class Root(object):
         if not self.modules.has_key(mode):
             self.modules[mode] = __import__(mode)
 
-        if self.modules.has_key(mode):
+        if self.modules.has_key(mode) and self.modules[mode]:
             self.currentModule = self.modules[mode]
 
             self.currentModule.init()
