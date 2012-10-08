@@ -1,3 +1,4 @@
+import time
 from threading import Thread
 from ledlib.colors import *
 from ledlib.remote import Remote
@@ -11,6 +12,7 @@ class Pong:
         self.leftPaddle = Vector(0,4)
         self.rightPaddle = Vector(11,4)
         self.ball = Vector(6,4)
+        self.ballvelocity = Vector(1,1)
         self.thread = None
 
     def init(self):
@@ -20,6 +22,7 @@ class Pong:
 
         try:
             self.thread = Thread(target=self.update, args=())
+            self.lastupdate = time.clock()
             self.thread.start()
         except Exception, errtxt:
             print errtxt
@@ -28,7 +31,10 @@ class Pong:
         self.thread.stop()
 
     def update(self):
-        pass
+        time = time.clock()
+        dt = (time - self.lastupdate)
+        self.lastupdate = time
+        self.ball += self.ballvelocity * dt
 
 
     def execute(self, data):
