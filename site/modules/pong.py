@@ -114,7 +114,7 @@ class Pong:
                 self.remote.setPixel(self.grid, Vector(6+i,7), RED)
         else:
             for i in range(-self.score):
-                self.remote.setPixel(self.grid, Vector(6-i,7), RED)
+                self.remote.setPixel(self.grid, Vector(5-i,7), RED)
                 
         self.remote.setPixel(self.grid, self.ball, WHITE)
         self.remote.setPixel(self.grid, self.leftPaddle, BLUE)
