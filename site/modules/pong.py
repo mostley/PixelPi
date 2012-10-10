@@ -106,15 +106,15 @@ class Pong:
             time.sleep(1/30.0 - (t2-t))
     
     def drawBall(self, pos, color):
-        self.remote.setPixel(self.grid, pos, WHITE)
+        #self.remote.setPixel(self.grid, pos, WHITE)
         
-#    	for x in range(PIXEL_DIM_X):
-#			for y in range(PIXEL_DIM_Y):
-#                p = Vector(x,y)
-#				dist = Vector.distance(p, pos)
-#				if dist <= 2:
-#                    c = (color[0]-dist*100, color[1]-dist*100, color[2]-dist*100)
-#                    self.remote.setPixel(self.grid, p, c)
+    	for x in range(PIXEL_DIM_X):
+			for y in range(PIXEL_DIM_Y):
+                p = Vector(x,y)
+				dist = Vector.distance(p, pos)
+				if dist <= 2:
+                    c = (color[0]-dist*100, color[1]-dist*100, color[2]-dist*100)
+                    self.remote.setPixel(self.grid, p, c)
     
     def draw(self):
         self.remote.clearPixels(self.grid, BLACK)
