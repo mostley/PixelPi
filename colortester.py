@@ -14,7 +14,7 @@ class RGBController:
             self.gamma[i] = int(pow(float(i) / 255.0, 2.5) * 255.0 )
 
         self.verbose = False
-        self.num_leds = 96
+        self.num_leds = 125
         self.color_red = 255
         self.color_green = 255
         self.color_blue = 255
@@ -64,7 +64,7 @@ def defineCliArguments(controller):
     parser.add_argument('--b', action='store', dest='color_blue', default=255, help='Specify the blue amount')
     parser.add_argument('--verbose', action='store_true', dest='verbose', default=True, help='enable verbose mode')
     parser.add_argument('--spi_dev', action='store', dest='spi_dev_name', required=False, default='/dev/spidev0.0', help='Set the SPI device descriptor')
-    parser.add_argument('--num_leds', action='store', dest='num_leds', required=True, default=96, help='The number of LEDs')
+    parser.add_argument('--num_leds', action='store', dest='num_leds', required=True, default=125, help='The number of LEDs')
 
     args = parser.parse_args()
 
