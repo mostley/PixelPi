@@ -43,7 +43,7 @@ class RGBController:
     def run(self):
         spidev = file(self.deviceName, "wb")
 
-        print ("Start RGB Tester " + str(self.num_leds) + "leds in " + str(self.color_red) + ":" + str(self.color_green) + ":" + str(self.color_blue))
+        print ("Start RGB Tester " + str(self.num_leds) + " leds in " + str(self.color_red) + ":" + str(self.color_green) + ":" + str(self.color_blue))
         
         pixels = bytearray(self.num_leds * PIXEL_SIZE)
         
