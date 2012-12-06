@@ -86,4 +86,4 @@ if __name__ == '__main__':
     defineCliArguments(controller)
     controller.run()
 
-    print "shuting down..."
+    print "done."
