@@ -62,9 +62,9 @@ class RGBController:
 
 def defineCliArguments(controller):
     parser = argparse.ArgumentParser(add_help=True,version='1.0', prog='pixelpi.py')
-    parser.add_argument('--r', action='store', dest='color_red', default='255', help='Specify the red amount')
-    parser.add_argument('--g', action='store', dest='color_green', default='255', help='Specify the green amount')
-    parser.add_argument('--b', action='store', dest='color_blue', default='255', help='Specify the blue amount')
+    parser.add_argument('--r', action='store', dest='color_red', default=255, help='Specify the red amount')
+    parser.add_argument('--g', action='store', dest='color_green', default=255, help='Specify the green amount')
+    parser.add_argument('--b', action='store', dest='color_blue', default=255, help='Specify the blue amount')
     parser.add_argument('--verbose', action='store_true', dest='verbose', default=True, help='enable verbose mode')
     parser.add_argument('--spi_dev', action='store', dest='spi_dev_name', required=False, default='/dev/spidev0.0', help='Set the SPI device descriptor')
     parser.add_argument('--num_leds', action='store', dest='num_leds', required=True, default=96, help='The number of LEDs')
@@ -75,9 +75,9 @@ def defineCliArguments(controller):
     controller.deviceName = args.spi_dev_name
     controller.num_leds = int(args.num_leds)
     controller.verbose = args.verbose
-    controller.color_red = args.color_red
-    controller.color_blue = args.color_blue
-    controller.color_green = args.color_green
+    controller.color_red = int(args.color_red)
+    controller.color_blue = int(args.color_blue)
+    controller.color_green = int(args.color_green)
 
 if __name__ == '__main__':
     print "starting..."
