@@ -48,10 +48,7 @@ class RGBController:
         pixels = bytearray(self.num_leds * PIXEL_SIZE)
         
         for pixel_index in range(self.num_leds):
-            pixel_to_adjust = bytearray(PIXEL_SIZE)
-            pixel_to_adjust.append(self.color_red)
-            pixel_to_adjust.append(self.color_green)
-            pixel_to_adjust.append(self.color_blue)
+            pixel_to_adjust = bytearray([self.color_red, self.color_green, self.color_blue])
 
             pixel_to_filter = self.correct_pixel_brightness(pixel_to_adjust)
 
