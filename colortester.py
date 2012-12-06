@@ -67,13 +67,13 @@ def defineCliArguments(controller):
     parser.add_argument('--b', action='store', dest='color_blue', default='255', help='Specify the blue amount')
     parser.add_argument('--verbose', action='store_true', dest='verbose', default=True, help='enable verbose mode')
     parser.add_argument('--spi_dev', action='store', dest='spi_dev_name', required=False, default='/dev/spidev0.0', help='Set the SPI device descriptor')
-    parser.add_argument('--num_leds', action='store', dest='num_leds', required=True, default='96', help='The number of LEDs')
+    parser.add_argument('--num_leds', action='store', dest='num_leds', required=True, default=96, help='The number of LEDs')
 
     args = parser.parse_args()
 
 
     controller.deviceName = args.spi_dev_name
-    controller.num_leds = args.num_leds
+    controller.num_leds = int(args.num_leds)
     controller.verbose = args.verbose
     controller.color_red = args.color_red
     controller.color_blue = args.color_blue
