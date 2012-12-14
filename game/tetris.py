@@ -31,6 +31,20 @@ class Shape:
     def rotateRandom(self):
         self.rotation = random.randrange(0, len(self.data))
 
+    def canBePlaced(self, table):
+        result = True
+
+        for y in range(len(self.data[self.rotation])):
+            for x in range(len(self.data[self.rotation][y])):
+                if self.data[self.rotation][y][x]:
+                    pos = self.position - Vector(x, y)
+                    
+                    if table[pos.y][pos.x] != 0:
+                        result = False
+                        break
+
+        return result
+
     def canDrop(self, table):
         result = True
 
@@ -38,8 +52,8 @@ class Shape:
             for x in range(len(self.data[self.rotation][y])):
                 if self.data[self.rotation][y][x]:
                     pos = self.position - Vector(x + 1, y)
-
-                    if pos.x <= 0 or table[pos.y][pos.x] != 0:
+                    
+                    if pos.x < 0 or table[pos.y][pos.x] != 0:
                         result = False
                         break
 
@@ -54,18 +68,18 @@ class Shape:
         for y in range(len(self.data[self.rotation])):
             for x in range(len(self.data[self.rotation][y])):
                 if self.data[self.rotation][y][x]:
-                    rgb.setPixel(self.position + Vector(x,y), COLORS[self.colorIndex])
+                    rgb.setPixel(self.position - Vector(x,y), COLORS[self.colorIndex])
 
     def writeTo(self, table):
         for y in range(len(self.data[self.rotation])):
             for x in range(len(self.data[self.rotation][y])):
                 if self.data[self.rotation][y][x]:
-                    pos = self.position + Vector(x,y)
+                    pos = self.position - Vector(x,y)
                     table[pos.y][pos.x] = self.colorIndex
 
 class Main:
     def __init__(self):
-        self.rgb = RGB("127.0.0.1", 6803, True)# "192.168.1.5")
+        self.rgb = RGB("127.0.0.1")# "192.168.1.5")
         self.rgb.invertedX = True
         self.rgb.invertedY = True
         #self.keyboard = Device("/dev/input/event0")
@@ -74,8 +88,7 @@ class Main:
 
         self.backgroundColor = BLACK
 
-
-        self.table = [[0 for i in range(PIXEL_DIM_X)] for i in range(PIXEL_DIM_Y)]
+        self.table = self.createTable()
 
         self.currentShape = None
         self.lastShape = time.time()
@@ -83,6 +96,7 @@ class Main:
         self.shapeInterval = 1.5
         self.temporaryFastDropInterval = 0.2
         self.isDroppingFast = False
+        self.gameLost = False
 
         self.shapes = [
 
@@ -173,6 +187,9 @@ class Main:
             ]])
         ]
 
+    def createTable(self):
+        return [[0 for i in range(PIXEL_DIM_X)] for i in range(PIXEL_DIM_Y)]
+
     def getKey(self, key):
         return key in self.keyboard.buttons and self.keyboard.buttons[key]
 
@@ -186,6 +203,9 @@ class Main:
                 self.isDroppingFast = True
             if self.getKey("KEY_UP"):
                 self.currentShape.rotate()
+            if self.getKey("KEY_RETURN"):
+                self.gameLost = False
+                self.table = self.createTable()
 
     def removeFullRows(self):
         fullRows = []
@@ -204,7 +224,17 @@ class Main:
         #todo: check for rows and remove them
 
     def update(self):
-        if self.currentShape:
+        if self.gameLost:
+            done = False
+            for x in range(len(self.table[0])):
+                for y in range(len(self.table)):
+                    if self.table[y][x] == 0:
+                        self.table[y][x] = random.randrange(1, len(COLORS))
+                        done = True
+                        break
+                if done: break
+
+        elif self.currentShape:
             if self.currentShape.canDrop(self.table):
                 interval = self.currentDropInterval
                 if self.isDroppingFast:
@@ -223,6 +253,14 @@ class Main:
             self.currentShape.colorIndex = random.randrange(1,len(COLORS))
             self.currentShape.position = Vector(PIXEL_DIM_X - 1, PIXEL_DIM_Y/2)
             self.currentShape.rotateRandom()
+
+            if not self.currentShape.canBePlaced(self.table):
+                self.gameOver()
+
+    def gameOver(self):
+        self.gameLost = True
+        self.currentShape = None
+        self.isDroppingFast = False
     
     def draw(self):
         for y in range(PIXEL_DIM_Y):

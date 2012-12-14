@@ -110,7 +110,7 @@ class SimulatorMain:
 		self.clock = pygame.time.Clock()
 
 		while self.running:
-			#dt = self.clock.tick(30) / 1000.0
+			dt = self.clock.tick(30) / 1000.0
 
 			data, addr = sock.recvfrom( UDP_BUFFER_SIZE ) # blocking call
 
