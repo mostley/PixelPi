@@ -222,7 +222,7 @@ def defineCliArguments(tester):
     parser.add_argument('--verbose', action='store_true', dest='verbose', default=True, help='enable verbose mode')
     parser.add_argument('--udp-ip', action='store', dest='UDP_IP', required=False, default='127.0.0.1', help='Used for PixelInvaders mode, listening address')
     parser.add_argument('--udp-port', action='store', dest='UDP_PORT', required=False, default=6803, type=int, help='Used for PixelInvaders mode, listening port')
-    parser.add_argument('--cmd', action='store', dest='cmd', required=False, default='allon', help='what should the tester do?')
+    parser.add_argument('--cmd', action='store', dest='cmd', required=False, default='allon', help='what should the tester do? (allon, alloff, test, test2, pong')
     
     args = parser.parse_args()
     tester.UDP_IP = args.UDP_IP

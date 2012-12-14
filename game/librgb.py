@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf8 -*- 
+
 import sys, argparse, socket, math
 from vector import *
 
@@ -13,6 +16,24 @@ BLUE = [0,0,255]
 TURQUE = [0,255,255]
 YELLOW = [255,255,0]
 BLACK = [0,0,0]
+ORANGE = [255, 127, 0]
+PURPLE = [128, 0, 128]
+
+class SPIDevice:
+    def __init__(self, device='/dev/spidev0.0'):
+        #import RPi.GPIO as GPIO
+        self.spidev = file(device, "wb")
+        self.running = True
+
+    def init(self):
+        pass
+
+    def tick(self):
+        pass
+    
+    def write(self, buffer):
+        self.spidev.write(buffer)
+        self.spidev.flush()
 
 class RGB:
 
@@ -22,6 +43,9 @@ class RGB:
         self.verbose = verbose
         self.invertedX = False
         self.invertedY = False
+        self.remote = self.UDP_IP != None
+
+        self.device = None
 
         self.buffer = self._createGridBuffer()
 
@@ -67,6 +91,11 @@ class RGB:
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.sendto( bytedata, (self.UDP_IP, self.UDP_PORT) )
 
+    def _writeBytes(self, bytedata):
+        if not self.device:
+            self.device = SPIDevice()
+        self.device.write(bytedata)
+
     # ==================================================================================================
     # ====================      Public                         ==========================================
     # ==================================================================================================
@@ -88,9 +117,14 @@ class RGB:
 
     def send(self):
         bytes = self._toByteArray()
-        if self.verbose:
-            print "sending to ",self.UDP_IP,":",self.UDP_PORT
-            print "sending ",bytes
-        self._sendBytes(bytes)
+
+        if self.remote:
+            if self.verbose:
+                print "sending to ",self.UDP_IP,":",self.UDP_PORT
+                print "sending ",self.buffer
+            
+            self._sendBytes(bytes)
+        else:
+            self._writeBytes(bytes)
 
 
