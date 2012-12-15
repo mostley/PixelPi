@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf8 -*- 
 
-#from evdev import *
+from evdev import *
 from librgb import *
 import time, random
 
