@@ -3,7 +3,7 @@
 
 from evdev import *
 from librgb import *
-import time, random, os, pyglet#tkSnack
+import time, random, os
 
 COLORS = [BLACK, BLUE, RED, YELLOW, PURPLE, GREEN, ORANGE, TURQUE]
 
