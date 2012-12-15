@@ -201,7 +201,7 @@ class Main:
 				if f.endswith(".mp3"):
 					self.musicFiles.append(f)
 					
-			if len(self.) == 0:
+			if len(self.musicFiles) == 0:
 				print "no music files in dir (",musicDir,")"
 			
 			self.playNextSong()
