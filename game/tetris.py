@@ -186,9 +186,31 @@ class Main:
                 [False, True ],
             ]])
         ]
+        
+        self.musicFiles = []
+        self.initMusic()
 	
-	def playMusic(self):
-		
+	def initMusic(self):
+		musicDir = ""
+		if not os.path.exists(musicDir):
+			print "no music dir (",musicDir,")"
+		else:
+			files = os.listdir(musicDir)
+			if len(files) == 0:
+				print "no music files in dir (",musicDir,")"
+			for f in files:
+				if f.endswith(".mp3"):
+					self.musicFiles.append(f)
+			
+			self.playNextSong()
+	
+	def playNextSong():
+		if len(self.musicFiles) > 0:
+			songFile = random.choice(self.musicFiles)
+			sound = pyglet.media.load(songFile)
+			sound.play()
+			pyglet.app.run()
+				
 	
     def createTable(self):
         return [[0 for i in range(PIXEL_DIM_X)] for i in range(PIXEL_DIM_Y)]
