@@ -125,6 +125,8 @@ class RGB:
             
             self._sendBytes(bytes)
         else:
+            if self.verbose:
+                print "sending ",self.buffer
             self._writeBytes(bytes)
 
 

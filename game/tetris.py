@@ -3,7 +3,7 @@
 
 from evdev import *
 from librgb import *
-import time, random, os, pyglet
+import time, random, os, pyglet#tkSnack
 
 COLORS = [BLACK, BLUE, RED, YELLOW, PURPLE, GREEN, ORANGE, TURQUE]
 
@@ -15,54 +15,51 @@ class Shape:
         self.lastDrop = time.time()
         self.colorIndex = 1
 
-    def rotate(self):
+    def rotate(self, table):
+        lastRotation = self.rotation
         self.rotation += 1
-        if self.rotation > len(self.data):
+        if self.rotation >= len(self.data):
             self.rotation = 0
-    
-    def moveRight(self):
-        if self.position.y < PIXEL_DIM_Y - 1:
+        if not self.canBePlacedAt(table, Vector(0,0)):
+            self.rotation = lastRotation
+
+    def moveRight(self, table):
+        if self.canBePlacedAt(table, Vector(0, 1)):
             self.position.y += 1
 
-    def moveLeft(self):
-        if self.position.y > 0:
+    def moveLeft(self, table):
+        if self.canBePlacedAt(table, Vector(0, -1)):
             self.position.y -= 1
-    
+
     def rotateRandom(self):
         self.rotation = random.randrange(0, len(self.data))
 
     def canBePlaced(self, table):
+        return self.canBePlacedAt(table, Vector(0,0))
+
+    def canBePlacedAt(self, table, offset):
         result = True
 
         for y in range(len(self.data[self.rotation])):
             for x in range(len(self.data[self.rotation][y])):
                 if self.data[self.rotation][y][x]:
-                    pos = self.position - Vector(x, y)
-                    
-                    if table[pos.y][pos.x] != 0:
+                    pos = (self.position - Vector(x, y)) + offset
+
+                    if pos.x < 0 or pos.y < 0 or \
+                       pos.x >= PIXEL_DIM_X or pos.y >= PIXEL_DIM_Y or \
+                       table[pos.y][pos.x] != 0:
                         result = False
                         break
 
         return result
 
     def canDrop(self, table):
-        result = True
-
-        for y in range(len(self.data[self.rotation])):
-            for x in range(len(self.data[self.rotation][y])):
-                if self.data[self.rotation][y][x]:
-                    pos = self.position - Vector(x + 1, y)
-                    
-                    if pos.x < 0 or table[pos.y][pos.x] != 0:
-                        result = False
-                        break
-
-
-        return result
+        return self.canBePlacedAt(table, Vector(-1, 0))
 
     def update(self, interval):
         if (time.time() - self.lastDrop) > interval:
             self.position += Vector(-1, 0)
+            self.lastDrop = time.time()
 
     def draw(self, rgb):
         for y in range(len(self.data[self.rotation])):
@@ -79,9 +76,11 @@ class Shape:
 
 class Main:
     def __init__(self):
-        self.rgb = RGB("127.0.0.1")# "192.168.1.5")
+        self.rgb = RGB()#"127.0.0.1")# "192.168.1.5")
         self.rgb.invertedX = True
-        self.rgb.invertedY = True
+        self.rgb.invertedY = False
+        self.rgb.verbose = False
+
         self.keyboard = Device("/dev/input/event0")
         self.character = Vector(0,0)
         self.lastFrame = time.time()
@@ -93,8 +92,9 @@ class Main:
         self.currentShape = None
         self.lastShape = time.time()
         self.currentDropInterval = 2
+        self.startDropInterval = 2
         self.shapeInterval = 1.5
-        self.temporaryFastDropInterval = 0.2
+        self.temporaryFastDropInterval = 0.0
         self.isDroppingFast = False
         self.gameLost = False
 
@@ -186,39 +186,34 @@ class Main:
                 [False, True ],
             ]])
         ]
-        
+
         self.musicFiles = []
-	
-	def test(self):
-		pass
-	
-	def initMusic(self):
-		musicDir = ""
-		if not os.path.exists(musicDir):
-			print "no music dir (",musicDir,")"
-		else:
-			files = os.listdir(musicDir)
-			
-			musicPlayer = pyglet.media.Player()
-			for f in files:
-				if f.endswith(".mp3"):
-					song = pyglet.media.load(f)
-					musicPlayer.queue(song)
-					#self.musicFiles.append(f)
-					
-			if len(self.musicFiles) == 0:
-				print "no music files in dir (",musicDir,")"
-			
-			musicPlayer.play()
-			#self.playNextSong()
-	
-	def playNextSong(self):
-		if len(self.musicFiles) > 0:
-			songFile = random.choice(self.musicFiles)
-			sound = pyglet.media.load(songFile)
-			sound.play()
-			pyglet.app.run()
-	
+        self.initMusic()
+
+    def initMusic(self):
+        musicDir = "music/"
+        if not os.path.exists(musicDir):
+            print "no music dir (",musicDir,")"
+        else:
+            files = os.listdir(musicDir)
+
+            for f in files:
+                if f.endswith(".mp3"):
+                    self.musicFiles.append(musicDir + f)
+
+            if len(self.musicFiles) == 0:
+                print "no music files in dir (",musicDir,")"
+            
+
+            self.playNextSong()
+
+    def playNextSong(self):
+        if len(self.musicFiles) > 0:
+            songFile = random.choice(self.musicFiles)
+            
+            print "play song ",songFile
+            os.system('mpg321 "' + songFile + '" &')
+
     def createTable(self):
         return [[0 for i in range(PIXEL_DIM_X)] for i in range(PIXEL_DIM_Y)]
 
@@ -228,30 +223,41 @@ class Main:
     def handleInput(self):
         if self.currentShape:
             if self.getKey("KEY_LEFT"):
-                self.currentShape.moveLeft()
+                self.currentShape.moveLeft(self.table)
             if self.getKey("KEY_RIGHT"):
-                self.currentShape.moveRight()
+                self.currentShape.moveRight(self.table)
             if self.getKey("KEY_DOWN"):
                 self.isDroppingFast = True
             if self.getKey("KEY_UP"):
-                self.currentShape.rotate()
-            if self.getKey("KEY_RETURN"):
+                self.currentShape.rotate(self.table)
+        if self.getKey("KEY_SPACE"):
+            print "new game"
+            if self.gameLost:
                 self.gameLost = False
                 self.table = self.createTable()
+                self.currentDropInterval = self.startDropInterval
+            else:
+                self.playNextSong()
 
     def removeFullRows(self):
         fullRows = []
-        for y in range(len(self.table)):
+        for x in range(len(self.table[0])):
             isFull = True
-            for x in range(len(self.table[y])):
+#            print "Row ",x
+            for y in range(len(self.table)):
+#                print "table ", x, y, " = ", self.table[y][x]
                 if self.table[y][x] == 0:
                     isFull = False
             if isFull:
-                fullRows.append(y)
-
-        for y in fullRows:
-            self.table.pop(y)
-            self.table.append([0 for x in range(PIXEL_DIM_X)])
+                fullRows.append(x)
+        
+        print "full rows: ",len(fullRows)
+        i = 0
+        for x in fullRows:
+            for y in range(len(self.table)):
+                self.table[y].pop(x-i)
+                self.table[y].append(0)
+            i += 1
 
     def update(self):
         if self.gameLost:
@@ -278,7 +284,9 @@ class Main:
                 self.lastShape = time.time()
 
                 self.removeFullRows()
-        elif (time.time() - self.lastShape) < self.shapeInterval:
+
+                self.currentDropInterval *= 0.9
+        else:#if (time.time() - self.lastShape) < self.shapeInterval:
             self.currentShape = random.choice(self.shapes)
             self.currentShape.colorIndex = random.randrange(1,len(COLORS))
             self.currentShape.position = Vector(PIXEL_DIM_X - 1, PIXEL_DIM_Y/2)
@@ -291,7 +299,7 @@ class Main:
         self.gameLost = True
         self.currentShape = None
         self.isDroppingFast = False
-    
+
     def draw(self):
         for y in range(PIXEL_DIM_Y):
             for x in range(PIXEL_DIM_X):
@@ -301,8 +309,7 @@ class Main:
 
         if self.currentShape:
             self.currentShape.draw(self.rgb)
-	def tested(self):
-		pass
+
     def run(self):
         while True:
             self.lastFrame = time.time()
@@ -322,7 +329,6 @@ class Main:
 
 if __name__ == "__main__":
     main = Main()
-    main.tested()
     main.run()
 
 
