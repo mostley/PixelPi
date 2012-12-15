@@ -301,7 +301,8 @@ class Main:
 
         if self.currentShape:
             self.currentShape.draw(self.rgb)
-	def tested(self):pass
+	def tested(self):
+		pass
     def run(self):
         while True:
             self.lastFrame = time.time()
