@@ -197,14 +197,17 @@ class Main:
 		else:
 			files = os.listdir(musicDir)
 			
+			musicPlayer = pyglet.media.Player()
 			for f in files:
 				if f.endswith(".mp3"):
-					self.musicFiles.append(f)
+					song = pyglet.media.load(f)
+					musicPlayer.queue(song)
+					#self.musicFiles.append(f)
 					
 			if len(self.musicFiles) == 0:
 				print "no music files in dir (",musicDir,")"
 			
-			self.playNextSong()
+			#self.playNextSong()
 	
 	def playNextSong():
 		if len(self.musicFiles) > 0:
