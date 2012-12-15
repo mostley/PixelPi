@@ -189,7 +189,10 @@ class Main:
         
         self.musicFiles = []
 	
-	def init(self):
+	def test(self):
+		pass
+	
+	def initMusic(self):
 		musicDir = ""
 		if not os.path.exists(musicDir):
 			print "no music dir (",musicDir,")"
@@ -318,7 +321,7 @@ class Main:
 
 if __name__ == "__main__":
     main = Main()
-    main.init()
+    main.initMusic()
     main.run()
 
 
