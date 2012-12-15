@@ -206,6 +206,7 @@ class Main:
 					
 			if len(self.musicFiles) == 0:
 				print "no music files in dir (",musicDir,")"
+			
 			musicPlayer.play()
 			#self.playNextSong()
 	
