@@ -275,7 +275,7 @@ class Main:
             self.lastFrame = time.time()
             self.rgb.clear(self.backgroundColor)
 
-            #self.handleInput()
+            self.handleInput()
 
             self.update()
 
@@ -284,8 +284,8 @@ class Main:
             self.rgb.send()
             
             while (time.time() - self.lastFrame) < 0.1:
-                #self.keyboard.poll()
-                time.sleep(0.4)
+                self.keyboard.poll()
+                #time.sleep(0.4)
 
 if __name__ == "__main__":
     main = Main()
