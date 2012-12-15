@@ -3,7 +3,7 @@
 
 from evdev import *
 from librgb import *
-import time, random
+import time, random, os, pyglet
 
 COLORS = [BLACK, BLUE, RED, YELLOW, PURPLE, GREEN, ORANGE, TURQUE]
 
@@ -186,7 +186,10 @@ class Main:
                 [False, True ],
             ]])
         ]
-
+	
+	def playMusic(self):
+		
+	
     def createTable(self):
         return [[0 for i in range(PIXEL_DIM_X)] for i in range(PIXEL_DIM_Y)]
 
