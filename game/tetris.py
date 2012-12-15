@@ -196,11 +196,13 @@ class Main:
 			print "no music dir (",musicDir,")"
 		else:
 			files = os.listdir(musicDir)
-			if len(files) == 0:
-				print "no music files in dir (",musicDir,")"
+			
 			for f in files:
 				if f.endswith(".mp3"):
 					self.musicFiles.append(f)
+					
+			if len(self.) == 0:
+				print "no music files in dir (",musicDir,")"
 			
 			self.playNextSong()
 	
