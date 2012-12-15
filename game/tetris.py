@@ -82,7 +82,7 @@ class Main:
         self.rgb = RGB("127.0.0.1")# "192.168.1.5")
         self.rgb.invertedX = True
         self.rgb.invertedY = True
-        #self.keyboard = Device("/dev/input/event0")
+        self.keyboard = Device("/dev/input/event0")
         self.character = Vector(0,0)
         self.lastFrame = time.time()
 
@@ -220,8 +220,6 @@ class Main:
         for y in fullRows:
             self.table.pop(y)
             self.table.append([0 for x in range(PIXEL_DIM_X)])
-
-        #todo: check for rows and remove them
 
     def update(self):
         if self.gameLost:
