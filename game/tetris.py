@@ -189,7 +189,7 @@ class Main:
         
         self.musicFiles = []
 	
-	def initMusic(self):
+	def init(self):
 		musicDir = ""
 		if not os.path.exists(musicDir):
 			print "no music dir (",musicDir,")"
@@ -215,7 +215,6 @@ class Main:
 			sound = pyglet.media.load(songFile)
 			sound.play()
 			pyglet.app.run()
-				
 	
     def createTable(self):
         return [[0 for i in range(PIXEL_DIM_X)] for i in range(PIXEL_DIM_Y)]
@@ -319,7 +318,7 @@ class Main:
 
 if __name__ == "__main__":
     main = Main()
-    main.initMusic()
+    main.init()
     main.run()
 
 
