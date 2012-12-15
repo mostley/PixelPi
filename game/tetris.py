@@ -188,7 +188,6 @@ class Main:
         ]
         
         self.musicFiles = []
-        self.initMusic()
 	
 	def initMusic(self):
 		musicDir = ""
@@ -320,6 +319,7 @@ class Main:
 
 if __name__ == "__main__":
     main = Main()
+    main.initMusic()
     main.run()
 
 
