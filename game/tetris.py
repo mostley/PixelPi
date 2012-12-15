@@ -209,7 +209,7 @@ class Main:
 			musicPlayer.play()
 			#self.playNextSong()
 	
-	def playNextSong():
+	def playNextSong(self):
 		if len(self.musicFiles) > 0:
 			songFile = random.choice(self.musicFiles)
 			sound = pyglet.media.load(songFile)
