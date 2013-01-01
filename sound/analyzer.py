@@ -2,5 +2,5 @@
 
 import pyaudio
 import numpy as np
-import bge
+#import bge
 import wave
