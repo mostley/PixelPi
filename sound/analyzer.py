@@ -19,7 +19,7 @@ myStream = p.open(
 	channels = CHANNELS, 
 	rate = RATE, 
 	input = True, 
-	output = True,
+	output = False,
 	frames_per_buffer = chunk)
 
 for i in range(0, RATE / chunk * RECORD_SECONDS):
