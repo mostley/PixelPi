@@ -1,8 +1,7 @@
 #!/usr/bin/python
 
-import pyaudio
+import pyaudio, wave, math
 import numpy as np
-import wave
 
 chunk = 2048
 
