@@ -14,7 +14,13 @@ RATE = 44100
 RECORD_SECONDS = 20
 
 p = pyaudio.PyAudio()
-myStream = p.open(format = FORMAT, channels = CHANNELS, rate = RATE, input = True, frames_per_buffer = chunk)
+myStream = p.open(
+	format = FORMAT, 
+	channels = CHANNELS, 
+	rate = RATE, 
+	input = True, 
+	output = True,
+	frames_per_buffer = chunk)
 
 for i in range(0, RATE / chunk * RECORD_SECONDS):
 	data = stream.read(chunk)
