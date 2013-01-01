@@ -11,7 +11,7 @@ window = np.blackman(chunk)
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 44100
-RECORD_SECONDS = 20
+RECORD_SECONDS = 5
 
 p = pyaudio.PyAudio()
 myStream = p.open(
