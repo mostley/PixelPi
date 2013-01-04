@@ -62,19 +62,19 @@ class RGB:
             x = int(math.floor(i/3 / PIXEL_DIM_Y))
             if x % 2 == 0:
                 c = self.buffer[x][y]
-                result[i] = c[0]
+                result[i] = int(c[0])
                 i = i + 1
-                result[i] = c[1]
+                result[i] = int(c[1])
                 i = i + 1
-                result[i] = c[2]
+                result[i] = int(c[2])
                 i = i + 1
             else:
                 c = self.buffer[x][(PIXEL_DIM_Y-1)-y]
-                result[i] = c[0]
+                result[i] = int(c[0])
                 i = i + 1
-                result[i] = c[1]
+                result[i] = int(c[1])
                 i = i + 1
-                result[i] = c[2]
+                result[i] = int(c[2])
                 i = i + 1
 
         return result
@@ -101,6 +101,10 @@ class RGB:
     # ==================================================================================================
     
     def setPixel(self, v, color):
+        #print v,color
+        if color == None or len(color) < 3:
+            raise Exception("wrong color format " + str(color))
+
         pos = v.toIntArr()
         if self.invertedX:
             pos[0] = (PIXEL_DIM_X - 1) - pos[0]
