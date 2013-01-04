@@ -10,8 +10,15 @@ class ControllCenter:
 		self.lastFrame = 0
 		self.keyboard = Device("/dev/input/event0")
 
+	def execute(self, cmd):
+		if cmd == "off":
+			spidev = file("/dev/spidev0.0")
+			spidev.write(bytearray([0 for i in range(125)]))
+			spidev.flush()
+
 	def handleInput(self):
-		pass
+		if self.getKey("KEY_F12"):
+			self.execute("off")
 	
 	def getKey(self, key):
 		 return key in self.keyboard.buttons and self.keyboard.buttons[key]
