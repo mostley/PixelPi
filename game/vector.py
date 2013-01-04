@@ -1,5 +1,14 @@
 # -*- coding: utf8 -*- 
 
+"""vector.py: A simple little Vector class. Enabling basic vector math. """
+
+__author__      = "Sven Hecht"
+__license__ = "GPL"
+__version__ = "1.0.1"
+__maintainer__ = "Sven Hecht"
+__email__ = "info@shdev.de"
+__status__ = "Production"
+
 from random import *
 from math import *
 
@@ -36,30 +45,35 @@ class Vector:
 	@staticmethod
 	def distance(a, b):
 		return (a - b).getLength()
+
+	@staticmethod
+	def angle(v1, v2):
+	  return acos(v1.dotproduct(v2) / (v1.getLength() * v2.getLength()))
+
+	@staticmethod
+	def angleDeg(v1, v2):
+	  return Vector.angle(v1,v2) * 180.0 / pi
 	
 	def set(self, x,y):
 		self.x = x
 		self.y = y
-	
-	def constrain(self, x,y,width,height):
-		if self.x < x:
-			self.x = x
-		elif self.x > x + width:
-			self.x = x + width
-		if self.y < y:
-			self.y = y
-		elif self.y > y + height:
-			self.y = y + height
 	
 	def toArr(self): return [self.x, self.y]
 	def toInt(self): return Vector(int(self.x), int(self.y))
 	def toIntArr(self): return self.toInt().toArr()
 
 	def getNormalized(self): 
-		if len(self) != 0:
+		if self.getLength() != 0:
 			return self / self.getLength()
 		else: return Vector(0,0)
 	
+	def dotproduct(self, other):
+		if isinstance(other, Vector):
+			return self.x * other.x + self.y * other.y
+		elif  isinstance(other, tuple) or isinstance(other, list):
+			return self.x * other[0] + self.y * other[1]
+		else:
+			return NotImplemented
 	def __add__(self, other):
 		if isinstance(other, Vector):
 			return Vector(self.x + other.x, self.y + other.y)
@@ -200,22 +214,22 @@ class Vector:
 			return NotImplemented
 	def __gt__(self, other):
 		if isinstance(other, Vector):
-			return len(self) > len(other)
+			return self.getLength() > other.getLength()
 		else:
 			return NotImplemented
 	def __ge__(self, other):
 		if isinstance(other, Vector):
-			return len(self) >= len(other)
+			return self.getLength() >= other.getLength()
 		else:
 			return NotImplemented
 	def __lt__(self, other):
 		if isinstance(other, Vector):
-			return len(self) < len(other)
+			return self.getLength() < other.getLength()
 		else:
 			return NotImplemented
 	def __le__(self, other):
 		if isinstance(other, Vector):
-			return len(self) <= len(other)
+			return self.getLength() <= other.getLength()
 		else:
 			return NotImplemented
 	
