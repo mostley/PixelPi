@@ -11,6 +11,8 @@ class ControllCenter:
 		self.keyboard = Device("/dev/input/event0")
 
 	def execute(self, cmd):
+		print "Executing ", cmd
+		
 		if cmd == "off":
 			spidev = file("/dev/spidev0.0")
 			spidev.write(bytearray([0 for i in range(125)]))
