@@ -34,5 +34,7 @@ class ControllCenter:
 				time.sleep(0.2)
 			                
 if __name__ == "__main__":
+	print "Starting Controll Center"
 	center = ControllCenter()
 	center.run()
+	print "Controll Center is shutting down"
