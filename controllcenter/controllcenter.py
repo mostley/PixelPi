@@ -34,3 +34,5 @@ class ControllCenter:
 		        time.sleep(0.2)
 			                
 if __name__ == "__main__":
+	center = ControllCenter()
+	center.run()
