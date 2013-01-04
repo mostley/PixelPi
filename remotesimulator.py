@@ -104,17 +104,22 @@ class SimulatorMain:
 		sock = socket.socket( socket.AF_INET, # Internet
 							  socket.SOCK_DGRAM ) # UDP
 		sock.bind( (self.UDP_IP,self.UDP_PORT) )
+		sock.settimeout(0.1)
 		UDP_BUFFER_SIZE = 1024
 
 		self.running = True
 		self.clock = pygame.time.Clock()
 
 		while self.running:
-			dt = self.clock.tick(30) / 1000.0
+			#dt = self.clock.tick(30) / 1000.0
+			data = None
+			try:
+				data, addr = sock.recvfrom( UDP_BUFFER_SIZE ) # blocking call
+			except:
+				pass
 
-			data, addr = sock.recvfrom( UDP_BUFFER_SIZE ) # blocking call
-
-			self.readData(data)
+			if data:
+				self.readData(data)
 
 			self.draw()
 
