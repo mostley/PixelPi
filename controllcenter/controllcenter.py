@@ -14,7 +14,7 @@ class ControllCenter:
 		print "Executing ", cmd
 		
 		if cmd == "off":
-			spidev = file("/dev/spidev0.0")
+			spidev = file("/dev/spidev0.0", "w")
 			spidev.write(bytearray([0 for i in range(125)]))
 			spidev.flush()
 
