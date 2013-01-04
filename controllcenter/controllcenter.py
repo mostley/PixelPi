@@ -30,8 +30,8 @@ class ControllCenter:
 			self.handleInput()
 			
 			while (time.time() - self.lastFrame) < 0.1:
-		        self.keyboard.poll()
-		        time.sleep(0.2)
+				self.keyboard.poll()
+				time.sleep(0.2)
 			                
 if __name__ == "__main__":
 	center = ControllCenter()
