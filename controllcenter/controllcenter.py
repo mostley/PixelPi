@@ -8,13 +8,14 @@ class ControllCenter:
 	
 	def __init__(self):
 		self.lastFrame = 0
+		self.keyboard = Device("/dev/input/event0")
 
 	def handleInput(self):
 		pass
 	
 	def getKey(self, key):
-		pass
-	
+		 return key in self.keyboard.buttons and self.keyboard.buttons[key]
+
 	def run(self):
 		while True:
 			self.lastFrame = time.time()
