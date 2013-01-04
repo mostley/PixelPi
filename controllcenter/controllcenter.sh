@@ -8,4 +8,4 @@
 # Description:       Enable service provided by daemon
 ### END INIT INFO
 
-python /home/pi/pixelpi/controllcenter/controllcenter.py
+python /home/pi/pixelpi/controllcenter/controllcenter.py &
