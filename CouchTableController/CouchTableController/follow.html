@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Couch Table Controller</title>
+        
+        <meta name="viewport" content="user-scalable=1.0,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0"/>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="format-detection" content="telephone=no"/>
+        
+        <link href='http://fonts.googleapis.com/css?family=Monda' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" media="screen" type="text/css" href="/table/content/css/farbtastic.css" />
+        <link rel="stylesheet" media="screen" type="text/css" href="/table/content/css/main.css" />
+        
+        <style type="text/css">
+            #table_top {
+                background-color: black;
+                position: relative;
+            }
+            #finger {
+                background-color: white;
+                width: 40px;
+                height: 40px;
+                border: 1px solid gray;
+                position: absolute;
+            }
+        </style>
+        
+    </head>
+    <body>
+        <div id="menu">
+            <a href="/table">Home</a>    
+            <a href="/table/follow.html">Follow</a>
+            <a href="/table/pong.html">Pong</a>
+        </div>
+
+        <div id="table_top" class="region">
+            <div id="finger"></div>
+        </div>
+        
+        <div id="colorpicker" class="region"></div>
+
+        <script type="text/javascript" src="/table/content/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="/table/content/farbtastic.js"></script>
+        <script type="text/javascript" src="/table/content/table.js"></script>
+        <script type="text/javascript">
+            var FingerRadius = 2;
+            var ColorPicker = null;
+            var moveTimer = null;
+            var CurrentColor = Table.hexToRGB('#ffffff');
+            var CurrentFingerPosition = { x: 0, y: 0 };
+            var UpdateInteval = 100;
+
+            function colorFromDistance(dist, c) {
+                dist += 0.0001; // Div by 0 protecction
+                //var f = (FingerRadius / dist);
+                var result = {
+                    R: Math.floor(c.R - dist * 100),
+                        G: Math.floor(c.G - dist * 100),
+                    B: Math.floor(c.B - dist * 100)
+                };
+
+                return result;
+            }
+            
+            function Distance(p1, p2) {
+                return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
+            }
+
+            function drawFinger() {
+                for (var y = 0; y < 8; y++) {
+                    for (var x = 0; x < 12; x++) {
+                        var i = x + y * 12;
+                        var p = { x: x, y: y };
+                        var dist = Distance(p, CurrentFingerPosition);
+                        Table.ledData[i] = colorFromDistance(dist, CurrentColor);
+                    }
+                }
+            }
+
+            function colorChanged(hex) {
+                CurrentColor = Table.hexToRGB(hex);
+                
+                drawFinger();
+
+                $('#finger').css('background-color', hex);
+                
+                Table.updateTable();
+            }
+            
+            function onFingerMove(e) {
+                var x = e.pageX - $('#table_top')[0].offsetLeft;
+                var y = e.pageY - $('#table_top')[0].offsetTop;
+                var width = $('#table_top').width();
+                var height = $('#table_top').height();
+
+                if (x > 0 && y > 0 && x < width && y < height) {
+                    $('#finger').css('left', (x - 20) + 'px')
+                        .css('top', (y - 20) + 'px');
+
+                    x = (x / width) * 12;
+                    y = (y / height) * 8;
+                    CurrentFingerPosition = { x: x, y: y };
+
+                    if (moveTimer == null) {
+                        moveTimer = window.setTimeout(updateFingerPosition, UpdateInteval);
+                    }
+                }
+            }
+            
+            function updateFingerPosition() {
+                moveTimer = null;
+
+                drawFinger();
+
+                Table.updateTable();
+            }
+
+            $(function () {
+
+                Table.init(function () {
+                    drawFinger();
+                });
+
+                $(document).bind('touchmove', function (e) {
+                    e.preventDefault();
+                    var event = window.event;
+                    onFingerMove({ pageX: event.touches[0].pageX, pageY: event.touches[0].pageY });
+                    return false;
+                });
+
+                ColorPicker = $.farbtastic('#colorpicker');
+                ColorPicker.linkTo(colorChanged);
+                ColorPicker.setColor('#ffffff');
+
+                $('#table_top').on('mousemove', function (e) {
+                    onFingerMove(e);
+                });
+            });
+        </script>
+        <!--<script type="text/javascript" src="http://jsconsole.com/remote.js?BE17DA17-119D-4B75-ACB5-158F0CF899BC"></script>-->
+    </body>
+</html>

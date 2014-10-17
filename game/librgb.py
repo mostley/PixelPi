@@ -8,6 +8,8 @@ PIXEL_SIZE = 3
 PIXEL_DIM_X = 12
 PIXEL_DIM_Y = 8
 BUFFER_SIZE = PIXEL_DIM_X * PIXEL_DIM_Y * PIXEL_SIZE
+MATRIX_COLS_BEFORE_ROWS = True
+MATRIX_LINEAR = False
 
 WHITE = [255,255,255]
 RED = [255,0,0]
@@ -58,9 +60,10 @@ class RGB:
 
         i = 0
         while i < BUFFER_SIZE:
-            y = i/3 % PIXEL_DIM_Y
-            x = int(math.floor(i/3 / PIXEL_DIM_Y))
-            if x % 2 == 0:
+
+            if MATRIX_LINEAR:
+                y = i/3 % PIXEL_DIM_Y
+                x = int(math.floor(i/3 / PIXEL_DIM_Y))
                 c = self.buffer[x][y]
                 result[i] = int(c[0])
                 i = i + 1
@@ -68,14 +71,47 @@ class RGB:
                 i = i + 1
                 result[i] = int(c[2])
                 i = i + 1
+
             else:
-                c = self.buffer[x][(PIXEL_DIM_Y-1)-y]
-                result[i] = int(c[0])
-                i = i + 1
-                result[i] = int(c[1])
-                i = i + 1
-                result[i] = int(c[2])
-                i = i + 1
+
+                if MATRIX_COLS_BEFORE_ROWS:
+                    y = i/3 % PIXEL_DIM_Y
+                    x = int(math.floor(i/3 / PIXEL_DIM_Y))
+                    if x % 2 == 0:
+                        c = self.buffer[x][y]
+                        result[i] = int(c[0])
+                        i = i + 1
+                        result[i] = int(c[1])
+                        i = i + 1
+                        result[i] = int(c[2])
+                        i = i + 1
+                    else:
+                        c = self.buffer[x][(PIXEL_DIM_Y-1)-y]
+                        result[i] = int(c[0])
+                        i = i + 1
+                        result[i] = int(c[1])
+                        i = i + 1
+                        result[i] = int(c[2])
+                        i = i + 1
+                else:
+                    x = i/3 % PIXEL_DIM_X
+                    y = int(math.floor(i/3 / PIXEL_DIM_X))
+                    if x % 2 == 0:
+                        c = self.buffer[x][y]
+                        result[i] = int(c[0])
+                        i = i + 1
+                        result[i] = int(c[1])
+                        i = i + 1
+                        result[i] = int(c[2])
+                        i = i + 1
+                    else:
+                        c = self.buffer[(PIXEL_DIM_X-1)-x][y]
+                        result[i] = int(c[0])
+                        i = i + 1
+                        result[i] = int(c[1])
+                        i = i + 1
+                        result[i] = int(c[2])
+                        i = i + 1
 
         return result
 

@@ -1,0 +1,203 @@
+﻿<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Couch Table Controller</title>
+        
+        <meta name="viewport" content="user-scalable=1.0,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0"/>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="format-detection" content="telephone=no"/>
+        
+        <link href='http://fonts.googleapis.com/css?family=Monda' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" media="screen" type="text/css" href="/table/content/css/farbtastic.css" />
+        <link rel="stylesheet" media="screen" type="text/css" href="/table/content/css/main.css" />
+        
+    </head>
+    <body>
+        <div id="menu">
+            <a href="/table">Home</a>    
+            <a href="/table/follow.html">Follow</a>
+            <a href="/table/pong.html">Pong</a>
+        </div>
+
+        <table id="table_top" class="region"></table>
+
+        <div id="table_bottom" class="region"></div>
+        
+        <div id="colorpicker" class="region"></div>
+        
+        <div class="region special-marker-region">
+            <div>
+                <div class="border">
+                    <div id="all_marker" class="special-marker">&nbsp;</div>
+                </div>
+                <div class="border">
+                    <div id="top_marker" class="special-marker">&nbsp;</div>
+                </div>
+                <div class="border">
+                    <div id="bottom_marker" class="special-marker">&nbsp;</div>
+                </div>
+            </div>
+            <div style="clear: both;"></div>
+            <div>
+                <div class="caption">All</div>
+                <div class="caption">Top</div>
+                <div class="caption">Bottom</div>
+            </div>
+        </div>
+        
+        <div class="region special-marker-region">
+            <div>
+                <div class="button-border">
+                    <div id="off_button" class="button">&nbsp;</div>
+                </div>
+            </div>
+            <div style="clear: both;"></div>
+            <div>
+                <div class="caption">Off</div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="/table/content/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="/table/content/farbtastic.js"></script>
+        <script type="text/javascript" src="/table/content/table.js"></script>
+        <script type="text/javascript">
+            var Table_Width = 12;
+            var Table_Height = 8;
+            var IsInitialized = false;
+            var SelectedLed = null;
+            var SelectedSpecialMarker = null;
+            var ColorPicker = null;
+            
+            function colorChanged(hex) {
+                if (SelectedLed) {
+                    SelectedLed.css('background-color', hex);
+
+                    var index = parseInt(SelectedLed.attr('class').match(/led-([0-9]+)/)[1]);
+                    Table.ledData[index] = Table.hexToRGB(hex);
+
+                    Table.updateTable();
+                } else if (SelectedSpecialMarker) {
+                    if (SelectedSpecialMarker[0].id == 'all_marker' || SelectedSpecialMarker[0].id == 'top_marker') {
+                        for (var i = 0; i < 96; i++) {
+                            Table.ledData[i] = Table.hexToRGB(hex);
+                        }
+                    }
+                    if (SelectedSpecialMarker[0].id == 'all_marker' || SelectedSpecialMarker[0].id == 'bottom_marker') {
+                        for (var j = 96; j < 105; j++) {
+                            Table.ledData[j] = Table.hexToRGB(hex);
+                        }
+                    }
+
+                    updateLedDisplay();
+                    
+                    Table.updateTable();
+                }
+            }
+
+            function unselectCurrent() {
+                if (SelectedLed) {
+                    SelectedLed.removeClass("selected");
+                }
+                SelectedLed = null;
+                if (SelectedSpecialMarker) {
+                    SelectedSpecialMarker.removeClass("selected");
+                }
+                SelectedSpecialMarker = null;
+            }
+
+            function selectLed() {
+                unselectCurrent();
+                
+                SelectedLed = $(this);
+                SelectedLed.addClass("selected");
+
+                ColorPicker.setColor(Table.rgbToHex(SelectedLed.css('background-color')));
+            }
+            
+            function selectSpecialMarker() {
+                unselectCurrent();
+                
+                SelectedSpecialMarker = $(this);
+                SelectedSpecialMarker.addClass("selected");
+
+                //ColorPicker.setColor(Table.rgbToHex(SelectedSpecialMarker.css('background-color')));
+            }
+
+            function initDisplay() {
+                IsInitialized = true;
+                
+                var i = 0;
+                for (var y = 0; y < Table_Height; y++) {
+                    var row = $('<tr></tr>');
+                    for (var x = 0; x < Table_Width; x++) {
+                        var cell = $('<td></td>');
+
+                        var light = $('<div>&nbsp;</div>');
+                        light.addClass("led");
+                        light.addClass("led-" + i);
+                        
+                        var color = Table.getCssColor(Table.ledData[i]);
+                        light.css('background-color', color);
+                        light.on('click', selectLed);
+
+                        cell.append(light);
+                        row.append(cell);
+
+                        i++;
+                    }
+                    $('#table_top').append(row);
+                }
+
+                var bLightIndex = 0;
+                for (var j = 96; j < 105; j++) {
+                    var bottomLight = $('<div></div>');
+
+                    bottomLight.addClass("led");
+                    bottomLight.addClass("led-" + j);
+                    bottomLight.addClass("bottom-light");
+                    bottomLight.addClass("bottom-light-" + bLightIndex);
+
+                    var bColor = Table.getCssColor(Table.ledData[j]);
+                    bottomLight.css('background-color', bColor);
+                    bottomLight.on('click', selectLed);
+
+                    $('#table_bottom').append(bottomLight);
+
+                    bLightIndex++;
+                }
+            }
+
+            function updateLedDisplay() {
+                if (!IsInitialized) {
+                    initDisplay();
+                } else {
+                    for (var i = 0; i < 105; i++) {
+                        $('.led-' + i).css('background-color', Table.getCssColor(Table.ledData[i]));
+                    }
+                }
+            }
+
+            $(function () {
+
+                Table.init(function () {
+                    updateLedDisplay();
+                });
+                
+                $(document).bind('touchmove', false);
+                
+                ColorPicker = $.farbtastic('#colorpicker');
+                ColorPicker.linkTo(colorChanged);
+
+                $('.special-marker').on('click', selectSpecialMarker);
+                
+                $('#off_button').on('click', function() {
+                    Table.turnAllLedsOff();
+                    updateLedDisplay();
+                });
+            });
+        </script>
+        <!--<script type="text/javascript" src="http://jsconsole.com/remote.js?BE17DA17-119D-4B75-ACB5-158F0CF899BC"></script>-->
+    </body>
+</html>

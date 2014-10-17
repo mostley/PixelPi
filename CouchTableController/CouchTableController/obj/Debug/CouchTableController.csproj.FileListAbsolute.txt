@@ -1,0 +1,7 @@
+D:\Lokale Daten\DropBox\Dropbox\projects\dotnet\CouchTableController\CouchTableController\bin\CouchTableController.dll
+D:\Lokale Daten\DropBox\Dropbox\projects\dotnet\CouchTableController\CouchTableController\bin\CouchTableController.pdb
+D:\Lokale Daten\DropBox\Dropbox\projects\dotnet\CouchTableController\CouchTableController\bin\Nancy.dll
+D:\Lokale Daten\DropBox\Dropbox\projects\dotnet\CouchTableController\CouchTableController\bin\Nancy.Hosting.Aspnet.dll
+D:\Lokale Daten\DropBox\Dropbox\projects\dotnet\CouchTableController\CouchTableController\obj\Debug\CouchTableController.csprojResolveAssemblyReference.cache
+D:\Lokale Daten\DropBox\Dropbox\projects\dotnet\CouchTableController\CouchTableController\obj\Debug\CouchTableController.dll
+D:\Lokale Daten\DropBox\Dropbox\projects\dotnet\CouchTableController\CouchTableController\obj\Debug\CouchTableController.pdb
